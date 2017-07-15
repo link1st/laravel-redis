@@ -22,15 +22,6 @@ class RedisCache extends Redis
     }
 
 
-    /**
-     * 查看redis连接资源
-     *
-     * @return $this
-     */
-    public function this()
-    {
-        return $this;
-    }
 
 
     /**
