@@ -1,0 +1,27 @@
+{
+    "name": "link1st/laravel-redis",
+    "description": "laravel-redis",
+    "keywords": [
+        "link1st",
+        "laravel",
+        "redis",
+        "laravel-redis"
+    ],    
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "type": "library",
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "authors": [
+        {
+            "name": "link1st",
+            "email": "link12stl@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "link1st\\RedisCache\\": "src/"
+        }
+    }
+}
