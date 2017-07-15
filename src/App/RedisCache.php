@@ -10,6 +10,7 @@ class RedisCache extends Redis
 
     private $config;
 
+
     /**
      * 构造函数
      *
@@ -18,25 +19,37 @@ class RedisCache extends Redis
     public function __construct()
     {
         $this->config = Config::get('redis_cache');
-
-        // 实例化的时候进行数据库连接
-        $redis_server = $this->openRedis();
     }
 
 
     /**
-     * TODO::不能切换数据库连接
+     * 查看redis连接资源
+     *
+     * @return $this
+     */
+    public function this()
+    {
+        return $this;
+    }
+
+
+    /**
      * redis连接
      *
      * @param string $type
      *
-     * @return bool|RedisServer
+     * @return bool|\RedisCache
      */
     public function openRedis($type = null)
     {
 
         if (empty($type)) {
             $type = ! empty($this->config['default']) ? $this->config['default'] : 'default';
+        }
+
+        // 避免同一个连接redis重复连接
+        if ( ! empty($this->$type)) {
+            return $this->$type;
         }
 
         // 获取redis连接配置项
@@ -50,8 +63,12 @@ class RedisCache extends Redis
             'persistent' => isset($config['redis_persistent']) ? $config['redis_persistent'] : true,
         ];
 
-        return $this->link($config_redis['ip'], $config_redis['port'], $config_redis['auth'], $config_redis['timeout'],
+        $link = $this->link($config_redis['ip'], $config_redis['port'], $config_redis['auth'], $config_redis['timeout'],
             $config_redis['persistent']);
+
+        $this->$type = $link;
+
+        return $link;
     }
 
 
@@ -64,11 +81,12 @@ class RedisCache extends Redis
      * @param int    $timeout    连接时间 3秒
      * @param bool   $persistent 是否持久化
      *
-     * @return bool|RedisServer
+     * @return bool|\RedisCache
      */
     public function link($host, $port = 3306, $auth = '', $timeout = 3, $persistent = false)
     {
 
+        $redis_cache = new RedisCache();
         // 连接时间必须是数字
         if ( ! is_numeric($timeout) || empty($timeout)) {
             $timeout = 0.0;
@@ -76,10 +94,10 @@ class RedisCache extends Redis
 
         if ($persistent === false) {
             // 非持久化
-            $connect_return = parent::connect($host, $port, $timeout);
+            $connect_return = $redis_cache->connect($host, $port, $timeout);
         } else {
 
-            $connect_return = parent::pconnect($host, $port, $timeout);
+            $connect_return = $redis_cache->pconnect($host, $port, $timeout);
         }
 
         if ($connect_return === false) {
@@ -89,12 +107,12 @@ class RedisCache extends Redis
         // 身份验证
         if ( ! empty($auth)) {
             // 验证失败
-            if (parent::auth($auth) === false) {
+            if ($redis_cache->auth($auth) === false) {
                 return false;
             }
         }
 
-        return $this;
+        return $redis_cache;
     }
 
 

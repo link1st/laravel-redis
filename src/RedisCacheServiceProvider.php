@@ -50,7 +50,7 @@ class RedisCacheServiceProvider extends ServiceProvider
 
         // 容器绑定
         $this->app->bind('RedisCache', function () {
-            return new RedisCache();
+            return (new RedisCache())->openRedis();
         });
     }
 
