@@ -10,28 +10,27 @@ class RedisCache extends Redis
 
     private $config;
 
-
     /**
      * 构造函数
      *
-     * LaravelKs3Client constructor.
-     * @throws \Exception
+     * RedisCache constructor.
      */
     public function __construct()
     {
         $this->config = Config::get('redis_cache');
 
         // 实例化的时候进行数据库连接
-        $this->openRedis();
+        $redis_server = $this->openRedis();
     }
 
 
     /**
+     * TODO::不能切换数据库连接
      * redis连接
      *
      * @param string $type
      *
-     * @return bool|RedisCache
+     * @return bool|RedisServer
      */
     public function openRedis($type = null)
     {
@@ -65,7 +64,7 @@ class RedisCache extends Redis
      * @param int    $timeout    连接时间 3秒
      * @param bool   $persistent 是否持久化
      *
-     * @return bool|RedisCache
+     * @return bool|RedisServer
      */
     public function link($host, $port = 3306, $auth = '', $timeout = 3, $persistent = false)
     {
