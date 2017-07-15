@@ -20,6 +20,9 @@ class RedisCache extends Redis
     public function __construct()
     {
         $this->config = Config::get('redis_cache');
+
+        // 实例化的时候进行数据库连接
+        $this->openRedis();
     }
 
 
@@ -39,8 +42,6 @@ class RedisCache extends Redis
 
         // 获取redis连接配置项
         $config = $this->config['connections'][$type];
-
-        dump($this->config);
 
         $config_redis = [
             'ip'         => isset($config['redis_host']) ? $config['redis_host'] : '',
