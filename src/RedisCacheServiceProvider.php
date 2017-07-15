@@ -3,9 +3,9 @@ namespace link1st\RedisCache;
 
 use Illuminate\Support\ServiceProvider;
 
-use link1st\RedisCache\App\LaravelKs3Client;
+use link1st\RedisCache\App\RedisCache;
 
-class Ks3ServiceProvider extends ServiceProvider
+class RedisCacheServiceProvider extends ServiceProvider
 {
 
     /**
