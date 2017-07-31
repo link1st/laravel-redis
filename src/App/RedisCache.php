@@ -5,6 +5,11 @@ namespace link1st\RedisCache\App;
 use Config;
 use Redis;
 
+/**
+ * Class RedisCache
+ * @package link1st\RedisCache\App
+ * @mixin Redis
+ */
 class RedisCache extends Redis
 {
 
@@ -22,14 +27,12 @@ class RedisCache extends Redis
     }
 
 
-
-
     /**
      * redis连接
      *
      * @param string $type
      *
-     * @return bool|\RedisCache
+     * @return bool|RedisCache|Redis
      */
     public function openRedis($type = null)
     {
@@ -72,7 +75,7 @@ class RedisCache extends Redis
      * @param int    $timeout    连接时间 3秒
      * @param bool   $persistent 是否持久化
      *
-     * @return bool|\RedisCache
+     * @return bool|RedisCache|Redis
      */
     public function link($host, $port = 3306, $auth = '', $timeout = 3, $persistent = false)
     {
