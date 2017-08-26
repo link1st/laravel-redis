@@ -5,6 +5,8 @@ laravel-redis，本laravel包使用的是**PHPRedis 需要开启Redis扩展才�
 
 配置**laravel-ide-helper**一起使用有代码提示
 
+支持redis集群
+
 ## 安装
 加载包
 
@@ -42,7 +44,7 @@ laravel-redis，本laravel包使用的是**PHPRedis 需要开启Redis扩展才�
 - **默认reids连接**
 ```
 // set 第二个参数可以为数组 第三个参数为ttl时间，默认不设置过期时间
-\RedisCache::set('name',['name'=>'小米']);
+\RedisCache::set('name',['name'=>'xiaoming']);
 
 // get 返回一个数组
 \RedisCache::get('name');
